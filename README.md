@@ -28,6 +28,6 @@ Installation Instructions
 Usage Overview
 --------------
 1. Install the module using instructions above.
-2. Thats it.
+2. When you no longer want to display the under construction page remove this module (by removing the 'underconstruction' directory).
 
 
