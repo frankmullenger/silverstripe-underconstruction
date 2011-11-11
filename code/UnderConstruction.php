@@ -50,7 +50,6 @@ class UnderConstruction_Decorator extends DataObjectDecorator {
 			}
 		}
 	}
-
 }
 
 /**
@@ -69,13 +68,14 @@ class UnderConstruction_Extension extends Extension {
    * @return Void
    */
   public function onBeforeInit() {
-    
+
     //Check to see if running /dev/build
     $runningDevBuild = $this->owner && $this->owner->data() instanceof ErrorPage;
 
     if (!Permission::check('ADMIN') 
         && strpos($_SERVER['REQUEST_URI'], '/admin') === false 
-        && strpos($_SERVER['REQUEST_URI'], '/Security') === false
+        && strpos($_SERVER['REQUEST_URI'], '/Security') === false 
+        && !Director::isDev() 
         && !$runningDevBuild) {
       Debug::friendlyError(503);
       exit;

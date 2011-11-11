@@ -24,6 +24,7 @@ Installation Instructions
 2. Visit yoursite.com/dev/build to rebuild the database and create the under construction page.
 3. Check that the under construction page was created by looking for an error-503.html page in the /assets folder.
 4. If you want to update the error page at any time (because your page template has changed perhaps), just delete the error-503.html page in the /assets folder and run /dev/build again to regenerate it.
+5. If your site is in dev mode then the under construction page will not be shown.
 
 Usage Overview
 --------------
