@@ -50,7 +50,6 @@ class UnderConstruction_Decorator extends DataObjectDecorator {
 			}
 		}
 	}
-
 }
 
 /**
@@ -69,16 +68,63 @@ class UnderConstruction_Extension extends Extension {
    * @return Void
    */
   public function onBeforeInit() {
-    
-    //Check to see if running /dev/build
-    $runningDevBuild = $this->owner && $this->owner->data() instanceof ErrorPage;
 
-    if (!Permission::check('ADMIN') 
-        && strpos($_SERVER['REQUEST_URI'], '/admin') === false 
-        && strpos($_SERVER['REQUEST_URI'], '/Security') === false
-        && !$runningDevBuild) {
-      Debug::friendlyError(503);
-      exit;
+    $siteConfig = SiteConfig::current_site_config();
+    $siteUnderConstruction = $siteConfig->UnderConstruction;
+    
+    if ($siteUnderConstruction) {
+      
+      //Check to see if running /dev/build
+      $runningDevBuild = $this->owner && $this->owner->data() instanceof ErrorPage;
+      
+      if (!Permission::check('ADMIN') 
+          && strpos($_SERVER['REQUEST_URI'], '/admin') === false 
+          && strpos($_SERVER['REQUEST_URI'], '/Security') === false 
+          && !Director::isDev() 
+          && !$runningDevBuild) {
+        Debug::friendlyError(503);
+        exit;
+      }
     }
   }
+}
+
+/**
+ * Decorator to add settings to config to make it easier to make the site live and 
+ * turn off any 'Under Construction' pages.
+ * 
+ * @author Frank Mullenger <frankmullenger@gmail.com>
+ * @package underconstruction
+ */
+class UnderConstruction_Settings extends DataObjectDecorator {
+  
+	/**
+   * Add database field for flag to either display or hide under construction pages.
+   * 
+   * @see DataObjectDecorator::extraStatics()
+   */
+	function extraStatics() {
+		return array(
+			'db' => array(
+		    'UnderConstruction' => 'Boolean'
+			)
+		);
+	}
+
+	/**
+	 * Adding field to allow CMS users to turn off under construction pages.
+	 * 
+	 * @see DataObjectDecorator::updateCMSFields()
+	 */
+  function updateCMSFields(FieldSet &$fields) {
+    $fields->addFieldToTab('Root.Access', new HeaderField(
+    	'UnderConstructionHeading', 
+      _t('UnderConstruction.SETTINGSHEADING', 'Is this site under construction?'), 
+      2
+    ));
+    $fields->addFieldToTab('Root.Access', new CheckboxField(
+    	'UnderConstruction', 
+    	_t('UnderConstruction.SETTINGSCHECKBOXLABEL', '&nbsp; Display an under construction page?')
+    ));
+	}
 }
