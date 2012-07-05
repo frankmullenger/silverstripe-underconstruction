@@ -112,7 +112,7 @@ class UnderConstruction_Settings extends DataExtension {
 	 * 
 	 * @see DataObjectDecorator::updateCMSFields()
 	 */
-  function updateCMSFields(FieldSet $fields) {
+  function updateCMSFields(FieldList $fields) {
     $fields->addFieldToTab('Root.Access', new HeaderField(
     	'UnderConstructionHeading', 
       _t('UnderConstruction.SETTINGSHEADING', 'Is this site under construction?'), 
