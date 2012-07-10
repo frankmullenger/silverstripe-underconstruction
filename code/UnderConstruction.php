@@ -98,11 +98,7 @@ class UnderConstruction_Extension extends Extension {
  */
 class UnderConstruction_Settings extends DataExtension {
   
-	/**
-   * Add database field for flag to either display or hide under construction pages.
-   * 
-   * @see DataObjectDecorator::extraStatics()
-   */
+	// Add database field for flag to either display or hide under construction pages.
 	static $db = array(
     'UnderConstruction' => 'Boolean'
 	);
@@ -110,7 +106,7 @@ class UnderConstruction_Settings extends DataExtension {
 	/**
 	 * Adding field to allow CMS users to turn off under construction pages.
 	 * 
-	 * @see DataObjectDecorator::updateCMSFields()
+	 * @see DataExtension::updateCMSFields()
 	 */
   function updateCMSFields(FieldList $fields) {
     $fields->addFieldToTab('Root.Access', new HeaderField(
