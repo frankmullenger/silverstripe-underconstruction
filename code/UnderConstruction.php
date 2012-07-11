@@ -6,7 +6,7 @@
  * @author Frank Mullenger <frankmullenger@gmail.com>
  * @package underconstruction
  */
-class UnderConstruction_Decorator extends DataObjectDecorator {
+class UnderConstruction_Decorator extends DataExtension {
    
   /**
    * Create an {@link ErrorPage} for status code 503
@@ -96,27 +96,19 @@ class UnderConstruction_Extension extends Extension {
  * @author Frank Mullenger <frankmullenger@gmail.com>
  * @package underconstruction
  */
-class UnderConstruction_Settings extends DataObjectDecorator {
+class UnderConstruction_Settings extends DataExtension {
   
-	/**
-   * Add database field for flag to either display or hide under construction pages.
-   * 
-   * @see DataObjectDecorator::extraStatics()
-   */
-	function extraStatics() {
-		return array(
-			'db' => array(
-		    'UnderConstruction' => 'Boolean'
-			)
-		);
-	}
+	// Add database field for flag to either display or hide under construction pages.
+	static $db = array(
+    'UnderConstruction' => 'Boolean'
+	);
 
 	/**
 	 * Adding field to allow CMS users to turn off under construction pages.
 	 * 
-	 * @see DataObjectDecorator::updateCMSFields()
+	 * @see DataExtension::updateCMSFields()
 	 */
-  function updateCMSFields(FieldSet &$fields) {
+  function updateCMSFields(FieldList $fields) {
     $fields->addFieldToTab('Root.Access', new HeaderField(
     	'UnderConstructionHeading', 
       _t('UnderConstruction.SETTINGSHEADING', 'Is this site under construction?'), 

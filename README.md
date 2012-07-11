@@ -8,7 +8,7 @@ Maintainer Contacts
 
 Requirements
 ------------
-* SilverStripe 2.4.5
+* SilverStripe 3.0
 
 Documentation
 -------------
