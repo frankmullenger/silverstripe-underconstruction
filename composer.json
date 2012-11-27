@@ -1,0 +1,17 @@
+{
+    "name": "silverstripe/underconstruction",
+    "description": "SilverStripe Under Construction Page Module",
+    "type": "silverstripe-module",
+    "keywords": ["silverstripe"],
+    "authors": [
+    {
+        "name": "Frank Mullenger",
+        "email": "frankmullenger@gmail.com"
+    }
+    ],
+    "require":
+    {
+        "silverstripe/framework": "3.*",
+	    "silverstripe/cms": "3.*"
+    }
+}
