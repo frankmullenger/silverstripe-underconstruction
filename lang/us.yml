@@ -1,0 +1,6 @@
+us:
+  UnderConstruction:
+    CONTENT: '<p>Sorry, this site is currently under construction.</p>'
+    SETTINGSCHECKBOXLABEL: '&nbsp; Display an under construction page?'
+    SETTINGSHEADING: 'Is this site under construction?'
+    TITLE: 'Under Construction'
