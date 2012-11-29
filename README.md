@@ -29,6 +29,8 @@ Installation Instructions
 5. If your site is in dev mode then the under construction page will not be shown.
 6. You will need to go to the SiteConfig->Access tab and tick the checkbox to 'Display an under construction page?'.
 
+You can find [this module on Packagist](https://packagist.org/packages/frankmullenger/underconstruction).
+
 Usage Overview
 --------------
 1. Install the module using instructions above.
