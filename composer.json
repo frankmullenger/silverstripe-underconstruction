@@ -1,8 +1,8 @@
 {
-    "name": "silverstripe/underconstruction",
+    "name": "frankmullenger/underconstruction",
     "description": "SilverStripe Under Construction Page Module",
     "type": "silverstripe-module",
-    "keywords": ["silverstripe"],
+    "keywords": ["silverstripe","under construction"],
     "authors": [
     {
         "name": "Frank Mullenger",
