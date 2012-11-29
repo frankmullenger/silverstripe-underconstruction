@@ -1,0 +1,6 @@
+de:
+  UnderConstruction:
+    CONTENT: '<p>Sorry, diese Webseite wird gerade bearbeitet.</p>'
+    SETTINGSCHECKBOXLABEL: '&nbsp; Baustellenseite anzeigen?'
+    SETTINGSHEADING: 'Seite in Baustellen Modus setzen?'
+    TITLE: 'In Bearbeitung'
