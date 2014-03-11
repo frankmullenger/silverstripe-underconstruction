@@ -22,12 +22,12 @@ class UnderConstruction_Decorator extends DataExtension {
 			mkdir(ASSETS_PATH);
 		}
 
-		$pageUnderConstructionErrorPage = DataObject::get_one('ErrorPage', "\"ErrorCode\" = '503'");
+		$pageUnderConstructionErrorPage = DataObject::get_one('UnderConstructionErrorPage', "\"ErrorCode\" = '503'");
 		$pageUnderConstructionErrorPageExists = ($pageUnderConstructionErrorPage && $pageUnderConstructionErrorPage->exists()) ? true : false;
-		$pageUnderConstructionErrorPagePath = ErrorPage::get_filepath_for_errorcode(503);
+		$pageUnderConstructionErrorPagePath = UnderConstructionErrorPage::get_filepath_for_errorcode(503);
 		if(!($pageUnderConstructionErrorPageExists && file_exists($pageUnderConstructionErrorPagePath))) {
 			if(!$pageUnderConstructionErrorPageExists) {
-				$pageUnderConstructionErrorPage = new ErrorPage();
+				$pageUnderConstructionErrorPage = new UnderConstructionErrorPage();
 				$pageUnderConstructionErrorPage->ErrorCode = 503;
 				$pageUnderConstructionErrorPage->Title = _t('UnderConstruction.TITLE', 'Under Construction');
 				$pageUnderConstructionErrorPage->Content = _t('UnderConstruction.CONTENT', '<p>Sorry, this site is currently under construction.</p>');
@@ -75,7 +75,7 @@ class UnderConstruction_Extension extends Extension {
     if ($siteUnderConstruction) {
       
       //Check to see if running /dev/build
-      $runningDevBuild = $this->owner && $this->owner->data() instanceof ErrorPage;
+      $runningDevBuild = $this->owner && ($this->owner->data() instanceof ErrorPage || $this->owner->data() instanceof UnderConstructionErrorPage);
       
       if (!Permission::check('ADMIN') 
           && strpos($_SERVER['REQUEST_URI'], '/admin') === false 
