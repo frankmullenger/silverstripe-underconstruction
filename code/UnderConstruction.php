@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * Under construction base class - allowing configuration
+ */
+class UnderConstruction extends Object {
+
+}
+
+
 /**
  * Decorator to essentially create a static under construction {@link ErrorPage} in the assets folder 
  * with the aid of requireDefaultRecords().
@@ -22,12 +31,12 @@ class UnderConstruction_Decorator extends DataExtension {
 			mkdir(ASSETS_PATH);
 		}
 
-		$pageUnderConstructionErrorPage = DataObject::get_one('ErrorPage', "\"ErrorCode\" = '503'");
+		$pageUnderConstructionErrorPage = DataObject::get_one('UnderConstructionErrorPage', "\"ErrorCode\" = '503'");
 		$pageUnderConstructionErrorPageExists = ($pageUnderConstructionErrorPage && $pageUnderConstructionErrorPage->exists()) ? true : false;
-		$pageUnderConstructionErrorPagePath = ErrorPage::get_filepath_for_errorcode(503);
+		$pageUnderConstructionErrorPagePath = UnderConstructionErrorPage::get_filepath_for_errorcode(503);
 		if(!($pageUnderConstructionErrorPageExists && file_exists($pageUnderConstructionErrorPagePath))) {
 			if(!$pageUnderConstructionErrorPageExists) {
-				$pageUnderConstructionErrorPage = new ErrorPage();
+				$pageUnderConstructionErrorPage = new UnderConstructionErrorPage();
 				$pageUnderConstructionErrorPage->ErrorCode = 503;
 				$pageUnderConstructionErrorPage->Title = _t('UnderConstruction.TITLE', 'Under Construction');
 				$pageUnderConstructionErrorPage->Content = _t('UnderConstruction.CONTENT', '<p>Sorry, this site is currently under construction.</p>');
@@ -75,9 +84,19 @@ class UnderConstruction_Extension extends Extension {
     if ($siteUnderConstruction) {
       
       //Check to see if running /dev/build
-      $runningDevBuild = $this->owner && $this->owner->data() instanceof ErrorPage;
-      
-      if (!Permission::check('ADMIN') 
+      $runningDevBuild = $this->owner && ($this->owner->data() instanceof ErrorPage || $this->owner->data() instanceof UnderConstructionErrorPage);
+
+      //Check whether the current member is in any allowed groups
+      //You can set allowed groups in your config file
+      $inAllowedGroup = false;
+      $member = Member::currentUser();
+      if ($member && is_array($groups = UnderConstruction::config()->allowed_groups)) {
+          if ($member->inGroups($groups)) {
+              $inAllowedGroup = true;
+          }
+      }
+      if (!Permission::check('ADMIN')
+          && !$inAllowedGroup
           && strpos($_SERVER['REQUEST_URI'], '/admin') === false 
           && strpos($_SERVER['REQUEST_URI'], '/Security') === false 
           && !Director::isDev() 
@@ -88,6 +107,7 @@ class UnderConstruction_Extension extends Extension {
     }
   }
 }
+
 
 /**
  * Decorator to add settings to config to make it easier to make the site live and 
