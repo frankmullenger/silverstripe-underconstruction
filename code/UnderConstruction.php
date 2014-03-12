@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * Under construction base class - allowing configuration
+ */
+class UnderConstruction extends Object {
+
+}
+
+
 /**
  * Decorator to essentially create a static under construction {@link ErrorPage} in the assets folder 
  * with the aid of requireDefaultRecords().
@@ -76,8 +85,18 @@ class UnderConstruction_Extension extends Extension {
       
       //Check to see if running /dev/build
       $runningDevBuild = $this->owner && ($this->owner->data() instanceof ErrorPage || $this->owner->data() instanceof UnderConstructionErrorPage);
-      
-      if (!Permission::check('ADMIN') 
+
+      //Check whether the current member is in any allowed groups
+      //You can set allowed groups in your config file
+      $inAllowedGroup = false;
+      $member = Member::currentUser();
+      if ($member && is_array($groups = UnderConstruction::config()->allowed_groups)) {
+          if ($member->inGroups($groups)) {
+              $inAllowedGroup = true;
+          }
+      }
+      if (!Permission::check('ADMIN')
+          && !$inAllowedGroup
           && strpos($_SERVER['REQUEST_URI'], '/admin') === false 
           && strpos($_SERVER['REQUEST_URI'], '/Security') === false 
           && !Director::isDev() 
@@ -88,6 +107,7 @@ class UnderConstruction_Extension extends Extension {
     }
   }
 }
+
 
 /**
  * Decorator to add settings to config to make it easier to make the site live and 
