@@ -10,7 +10,7 @@ Requirements
 ------------
 * SilverStripe 3.0
 
-Documentation
+Amazing Documentation
 -------------
 This is essentially just a much, much better version of the [holding page module](https://github.com/frankmullenger/silverstripe-holdingpage) and achieves practically the same thing. This module will create a static HTML error page in the assets folder when it is installed. Then when a non admin user tries to visit the website the error page will be displayed. Once an admin user has logged in they will be able to browse the website at will.
 
