@@ -7,7 +7,7 @@ Maintainer Contacts
    [My Blog](http://deadlytechnology.com)
 
 Requirements
-------------
+---------------
 * SilverStripe 3.0
 
 Documentation
